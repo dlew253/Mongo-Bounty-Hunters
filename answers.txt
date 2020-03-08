@@ -1,1 +1,68 @@
 Please replace this text with ~50 lines of terminal history.
+//see all
+db.bounties.find()
+
+//find bounty whos client is Time Bureau 
+db.bounties.find({ client: { $gte : "Time Bureau" }})
+
+//find captured bounties
+db.bounties.find({ captured: { $ne : false}})
+
+//find specific thing to created bounty
+ db.bounties.find({ reward:{ $lt: 50000, $gte : 41000} })
+
+//return just names
+ db.bounties.find({}, {name: 1 })
+
+
+// remove Starbuck]
+db.bounties.remove({ name: { $gte: 'Starbuck' }})
+
+//change saras name
+db.bounties.update({ name: 'Sara Lance'}, {$set: { name:'White Canary'} })
+
+//change ship name to Milano 2
+db.bounties.update({ name: 'Rocket'}, {$set: { ship:'The Milano 2'} })
+
+//find bounties over 100,000
+db.bounties.find({ reward: {  $gt: 100000 } })
+
+//find bounty less than 1000
+db.bounties.find({ reward: { $lt: 1000 } })
+
+//find bounty less than or equal to 1000
+db.bounties.find({ reward: { $lte: 1000 }})
+
+//find bounty w/ hunter nebula
+db.bounty.find({ hunters: "Nebula" })
+
+//find bounty with ships named Waverider and Serenity
+db.bounties.find({ $or: [{ ship: "Serenity"}, { ship: "Waverider" }]})
+
+
+//find not captured bounty whos client is ayesha 
+ db.bounties.find({ captured: false, client: "Ayesha High Priestess of the Sovereign" })
+
+//increase all  bounty to 333333
+db.bounties.update({ $inc: { reward: 333333 }})
+
+//x2 all bounties
+db.bounties.update({reward: { $gt: 0}}, { $mul: { reward: (2) }}, { multi: true })
+
+//boba fett now hunts malcom reynolds
+> db.bounties.update({ name: "Malcom Reynolds"}, { $push: { hunters: "Bobba Fett" }})
+
+//boba fett now hunts the Waverider
+> db.bounties.update({ ship: "Waverider"}, { $push: { hunters: "Bobba Fett" }})
+
+//remove dengar
+> db.bounties.update({ name: "Han Solo"}, { $pull: { hunters: "Dengar" }})
+
+//add lastSeen to Han Solo add yesterday to last lastSeen
+> db.bounties.update({ name: "Han Solo" }, { $set: { lastSeen: "yesterday" }}, { upsert: true })
+
+// last seen to all, set to last week = false 
+> db.bounties.update({reward: { $gt: 0}}, { $set: { lastSeen: "last week" }}, { multi: true }, { upsert: false })
+
+
+
